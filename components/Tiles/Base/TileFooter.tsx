@@ -1,0 +1,100 @@
+import Link from 'next/link'
+import MoreDetails from '@/components/Elements/MoreDetails'
+import { cva, VariantProps } from 'class-variance-authority'
+import {
+  MsKlimadashboardIconsNaviDownload,
+  MsKlimadashboardIconsNaviKachelImplementieren,
+  MsKlimadashboardIconsNaviTeilen,
+} from '@/components/Icons/Navigation'
+import Divider from '@/components/Elements/Divider'
+
+const tileFooterStyle = cva('flex flex-1 gap-4', {
+  variants: {
+    variant: {
+      primary: 'text-primary fill-primary',
+      inverse: 'text-white fill-white',
+    },
+  },
+  defaultVariants: {
+    variant: 'primary',
+  },
+})
+
+type TileFooterProps = VariantProps<typeof tileFooterStyle> & {
+  onEmbedClick?: () => void
+  onMoreInfoClick?: () => void
+  onShareClick?: () => void
+  children?: React.ReactElement
+  dataURL?: string | null
+  hasMoreDetails?: boolean
+}
+
+/**
+ * A footer for all tiles with sharing, export and embed button as well as a more information link
+ * @returns TileFooter
+ */
+export default function TileFooter({
+  onEmbedClick,
+  onMoreInfoClick,
+  onShareClick,
+  children,
+  variant,
+  dataURL,
+  hasMoreDetails,
+}: TileFooterProps) {
+  function IconButtons() {
+    return (
+      <div className={tileFooterStyle({ variant })}>
+        <Link
+          className="fill-inherit transition-all hover:fill-secondary"
+          href={'#'}
+          onClick={e => {
+            e.preventDefault()
+            e.stopPropagation()
+            onEmbedClick?.()
+          }}
+        >
+          <MsKlimadashboardIconsNaviKachelImplementieren className="h-6 cursor-pointer stroke-2 px-1" />
+        </Link>
+
+        <Link
+          className="fill-inherit transition-all hover:fill-secondary"
+          href={'#'}
+          onClick={e => {
+            e.preventDefault()
+            e.stopPropagation()
+            onShareClick?.()
+          }}
+        >
+          <MsKlimadashboardIconsNaviTeilen className="h-6 cursor-pointer stroke-2 px-1" />
+        </Link>
+
+        {dataURL && (
+          <Link
+            className="fill-inherit transition-all hover:fill-secondary"
+            href={dataURL}
+            target="_blank"
+          >
+            <MsKlimadashboardIconsNaviDownload className="h-6 stroke-2 px-1" />
+          </Link>
+        )}
+      </div>
+    )
+  }
+
+  return (
+    <div className="mt-2">
+      <Divider />
+      <div className="mt-2 flex w-full flex-row items-center justify-between gap-2">
+        <IconButtons />
+        <div className="flex flex-[2_2_0%] justify-center">{children}</div>
+        {hasMoreDetails && (
+          <div className="flex flex-1 justify-end" onClick={onMoreInfoClick}>
+            <MoreDetails variant={variant} />
+          </div>
+        )}
+        {!hasMoreDetails && <div className="flex flex-1 justify-end"></div>}
+      </div>
+    </div>
+  )
+}
