@@ -1,0 +1,28 @@
+import { ActionDimensionsType } from '@/types/dimensionMapping'
+import { BackgroundStyle } from '@/utils/variants/BackgroundVariants'
+import * as ProgressPrimitive from '@radix-ui/react-progress'
+import { cx } from 'class-variance-authority'
+
+export default function DriveTypeProgress({
+  progress,
+  variant,
+}: {
+  progress: number
+  variant: ActionDimensionsType
+}) {
+  const myProgress = progress > 0 ? progress : 0
+
+  return (
+    <div className="flex w-full">
+      <ProgressPrimitive.Root className="w-full" value={myProgress}>
+        <ProgressPrimitive.Indicator
+          className={cx(
+            BackgroundStyle({ variant }),
+            'relative mt-[0.8px] flex h-1.5 transition-all md:mt-[4.5px] md:h-3',
+          )}
+          style={{ width: `${myProgress}%` }}
+        ></ProgressPrimitive.Indicator>
+      </ProgressPrimitive.Root>
+    </div>
+  )
+}

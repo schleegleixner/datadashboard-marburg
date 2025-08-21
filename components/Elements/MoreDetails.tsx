@@ -1,0 +1,59 @@
+import Link from 'next/link'
+import type { VariantProps } from 'class-variance-authority'
+import { cva, cx } from 'class-variance-authority'
+import { MsKlimadashboardIconsNaviInfoI } from '../Icons/Navigation'
+
+const style = cva('flex cursor-pointer items-center gap-1 md:gap-3', {
+  variants: {
+    variant: {
+      primary: 'text-primary',
+      inverse: 'text-white',
+    },
+  },
+  defaultVariants: {
+    variant: 'primary',
+  },
+})
+
+export type MoreDetailsProps = VariantProps<typeof style> & {
+  link?: string
+  className?: string
+  lessDetails?: boolean
+  onClick?: () => void
+}
+
+export default function MoreDetails({
+  link,
+  variant,
+  className,
+  lessDetails,
+  onClick,
+}: MoreDetailsProps) {
+  const Details = (
+    <Link
+      className={cx(
+        'transition-all hover:text-secondary',
+        style({ variant }),
+        className,
+      )}
+      href={'#'}
+      onClick={event => {
+        if (!link) {
+          event.preventDefault()
+        }
+        onClick?.()
+      }}
+    >
+      <MsKlimadashboardIconsNaviInfoI className="h-6" />
+      <div className="whitespace-nowrap underline">
+        {lessDetails ? 'Zurück' : 'Mehr Details'}
+      </div>
+    </Link>
+  )
+
+  if (!link) {
+    return Details
+  }
+
+  return <Link href={link}>{Details}</Link>
+}

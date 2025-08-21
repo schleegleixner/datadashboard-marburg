@@ -1,0 +1,6 @@
+export { default as IconGear } from './IconGear'
+export { default as IconHome } from './IconHome'
+export { default as MsKlimadashboardIconsNaviDownload } from './MsKlimadashboardIconsNaviDownload'
+export { default as MsKlimadashboardIconsNaviKachelImplementieren } from './MsKlimadashboardIconsNaviKachelImplementieren'
+export { default as MsKlimadashboardIconsNaviTeilen } from './MsKlimadashboardIconsNaviTeilen'
+export { default as MsKlimadashboardIconsNaviInfoI } from './MsKlimadashboardIconsNaviInfoI'
