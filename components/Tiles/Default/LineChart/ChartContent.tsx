@@ -1,0 +1,23 @@
+'use client'
+
+import { ChartProps } from './dt'
+import Chart from '@/components/Tiles/Base/Chart'
+import { getString } from '@schleegleixner/react-statamic-api'
+
+export default function ChartContent({
+  tile_payload,
+  switch: toggle,
+  datasource,
+  categorize = true
+}: ChartProps) {
+  return (
+    <Chart
+      categorize={categorize}
+      chart_type={'line'}
+      datasource={datasource}
+      layout={tile_payload.layout}
+      switch={toggle}
+      title={getString(tile_payload, 'chart_title')}
+    />
+  )
+}
